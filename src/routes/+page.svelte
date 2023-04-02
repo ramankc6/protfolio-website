@@ -1,6 +1,4 @@
-<svelte:head>
-  <link href="https://github.com/microsoft/cascadia-code" rel="stylesheet">
-</svelte:head>
+
 
 
 <script lang="js">
@@ -27,7 +25,7 @@ let cursorColor = "#aeafad";
 const fullText = ["Hey Snap!", "My name is Raman Khatri Chhetri"];
 const lessThan = '<';
 const greaterThan = '>';
-let image;
+let laptopImage;
 let resumeTrans;
 let experinceTrans;
 let contactTrans;
@@ -49,6 +47,7 @@ let projects = true
 //When the user loads the website it calls cusor Annimation which starts the typing annimation
 onMount(async () => {
     cursorAnnimation();
+    imageResizer();
 });
 
 //-------Functions-------//
@@ -83,7 +82,6 @@ function writer() {
             setTimeout(cursorAnnimation, 500);
         } else {
             cursorColor = "#1e1e1e";
-            setTimeout(imageResizer, 0);
         }
     }
 }
@@ -108,7 +106,7 @@ function deleter() {
 function imageResizer() {
     if (y > 500 && y < 900) {
         scale = 1 + (y - 500) / 1000;
-        image.style.transform = `scale(${scale})`;
+        laptopImage.style.transform = `scale(${scale})`;
         setTimeout(imageResizer, 0)
     }else {
         setTimeout(imageResizer, 0)
@@ -191,8 +189,8 @@ body{
 }
 
 .headshotImg {
-    height: 56vh;
-    width: 56.5vh;
+    min-height: 56vh;
+    min-width: 56.5vh;
 }
 
 
@@ -263,6 +261,7 @@ body{
     flex-direction: column;
     justify-content: flex-start;
     transition: 1.5s;
+    /* border: 0; */
 }
 .resumeDiv:hover,
 .projectsDiv:hover,
@@ -294,7 +293,7 @@ button{
 
 <body>
     {#if y > 50 && y < 900}
-    <div class= 'introBackground' transition:fade><img bind:this="{image}" src = '/laptop.png' alt = 'laptop' class = 'laptopImg' style= 'transform: {1 + (y - 50) / 1000}'></div>
+    <div class= 'introBackground' transition:fade><img bind:this="{laptopImage}" src = '/laptop.png' alt = 'laptop' class = 'laptopImg' style= 'transform: {1 + (y - 50) / 1000}'></div>
     {:else if y < 50}
     <div class = 'introContainer' transition:fade>
         <div class = 'headshotDiv'><img src= '/headshot.png' alt='headshot' class='headshotImg'></div>
