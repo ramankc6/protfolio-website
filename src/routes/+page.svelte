@@ -9,6 +9,7 @@ import { onMount } from "svelte";
 import { fade } from 'svelte/transition';
 import { fly } from 'svelte/transition';
 
+
 //-------Variable declarations-------//
 
 //Index Declarations
@@ -25,7 +26,7 @@ let cursorColor = "#aeafad";
 const fullText = ["Hey Snap!", "My name is Raman Khatri Chhetri"];
 const lessThan = '<';
 const greaterThan = '>';
-let laptopImage;
+let laptopSize;
 let resumeTrans;
 let experinceTrans;
 let contactTrans;
@@ -34,6 +35,8 @@ let projectsTrans;
 //Scrolling Declaration
 let y = 0;
 let scale = 1;
+let userWidth;
+let laptopImg = '/laptop.png';
 
 //Boolean Declarations
 let resume = true
@@ -104,9 +107,12 @@ function deleter() {
 }
 
 function imageResizer() {
-    if (y > 500 && y < 900) {
-        scale = 1 + (y - 500) / 1000;
-        laptopImage.style.transform = `scale(${scale})`;
+    if (userWidth <= 767) {
+        laptopImg = '/phone.png'
+    }
+    if (y > 900 && y < 1300) {
+        scale = 1 + (y - 900) / 1000;
+        laptopSize.style.transform = `scale(${scale})`;
         setTimeout(imageResizer, 0)
     }else {
         setTimeout(imageResizer, 0)
@@ -147,7 +153,8 @@ function buttonPressed (buttonType) {
 
 body{
     background-color: #1e1e1e;
-    min-height: 100000px;
+    min-height: 10000px;
+    margin: 0;
 }
 
 #cursor {
@@ -169,19 +176,34 @@ body{
 .introText{
     font-family: 'Cascadia Code', sans-serif;
     text-align: center;
-    font-size: 30px;
+    font-size: 2vw;
 }
 
+.typingDiv {
+    min-width: 50vw;
+}
 .introContainer{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    z-index: 2;
     position: fixed;
-    left: 25%
 }
 
+.introPage {
+    min-height: 100vh;
+    min-width: 100vw;
+    display: flex;
+    justify-content: center;
+    z-index: 1;
+}
+.aboutPage {
+    min-height: 100vh;
+    min-width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .headshotDiv {
     display: flex;
     height: 68vh;
@@ -194,9 +216,9 @@ body{
 }
 
 
-.introBackground {
+.aboutBackground {
     position: fixed;
-    z-index: 1;
+    z-index: 2;
     width: 100%;
     height: 100%;
     overflow-x: hidden;
@@ -214,7 +236,7 @@ body{
     position: fixed;
     font-family: 'Cascadia Code', sans-serif;
     text-align: center;
-    font-size: 30px;
+    font-size: 2vw;
     color:white;
     display: flex;
     flex-direction: column;
@@ -222,7 +244,7 @@ body{
     align-items: center;
     z-index: 2;
     position: fixed;
-    top: 20%;
+    /* top: 20%; */
 }
 
 .aboutTextDiv{
@@ -292,13 +314,14 @@ button{
 </style>
 
 <body>
-    {#if y > 50 && y < 900}
-    <div class= 'introBackground' transition:fade><img bind:this="{laptopImage}" src = '/laptop.png' alt = 'laptop' class = 'laptopImg' style= 'transform: {1 + (y - 50) / 1000}'></div>
+    {#if y > 50 && y < 1300}
+    <div class= 'aboutBackground' in:fade><img bind:this="{laptopSize}" src = {laptopImg} alt = 'laptop' class = 'laptopImg' style= 'transform: {1 + (y - 50) / 1000}'></div>
     {:else if y < 50}
-    <div class = 'introContainer' transition:fade>
+    <div class = 'introPage'>
+    <div class = 'introContainer'>
         <div class = 'headshotDiv'><img src= '/headshot.png' alt='headshot' class='headshotImg'></div>
-        <div>
-            <p class= "introText">
+        <div class= 'typingDiv'>
+            <p class= "introText" >
                 <span class="inequalitySymbols">{lessThan}</span><span class='letterP'>
                 p</span><span class="inequalitySymbols">
                 {greaterThan}</span><span class=typingText>
@@ -310,9 +333,11 @@ button{
             </p>
         </div>
     </div>
+    </div>
     {/if}
-    {#if y > 50 && y < 600}
-        <div class='aboutContainer' transition:fade>
+    {#if y > 50 && y < 1100}
+        <div class='aboutPage'>
+        <div class='aboutContainer' in:fade>
             <div>
                 <p>About</p>
             </div>
@@ -320,8 +345,9 @@ button{
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi voluptas, quo repellendus doloremque fuga reprehenderit incidunt quaerat saepe laboriosam, expedita tempora neque ad quisquam quam perferendis vel autem magnam hic?</p>
             </div>
         </div>
+        </div>
     {/if}
-    {#if y > 1100}
+    {#if y > 1400}
     <div class='optionsDiv'>
         <div class='leftOptionsDiv'>
             {#if resume == true}
@@ -365,4 +391,4 @@ button{
 
 </body>
 
-<svelte:window bind:scrollY={y} />
+<svelte:window bind:scrollY={y} bind:innerWidth={userWidth} />
