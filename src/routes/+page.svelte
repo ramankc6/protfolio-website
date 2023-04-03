@@ -16,6 +16,7 @@ import { fly } from 'svelte/transition';
 let textIndex = 0;
 let fullTextIndex = 0;
 let cursorIndex = 0;
+let mouseAnnimationIndex = 1;
 
 //Changing Text Declaration
 let text = "";
@@ -37,12 +38,14 @@ let y = 0;
 let scale = 1;
 let userWidth;
 let laptopImg = '/laptop.png';
+let scrollImg = '/mouseScroll.png';
 
 //Boolean Declarations
 let resume = true
 let experince = true
 let contact = true
 let projects = true
+let showScroller = false
 
 
 //-------Start onMount-------//
@@ -85,10 +88,22 @@ function writer() {
             setTimeout(cursorAnnimation, 500);
         } else {
             cursorColor = "#1e1e1e";
+            setTimeout(mouseAnnimation, 300)
         }
     }
 }
 
+function mouseAnnimation() {
+    if (mouseAnnimationIndex % 2 == 0) {
+        showScroller = false
+        mouseAnnimationIndex++
+        setTimeout(mouseAnnimation, 600)
+    } else{
+        showScroller = true
+        mouseAnnimationIndex++
+        setTimeout(mouseAnnimation, 1000)
+    }
+}
 
 //Fnction that deletes the text, goes back to cursor when done
 function deleter() {
@@ -109,6 +124,7 @@ function deleter() {
 function imageResizer() {
     if (userWidth <= 767) {
         laptopImg = '/phone.png'
+        scrollImg = '/mobileScroll.png'
     }
     if (y > 900 && y < 1300) {
         scale = 1 + (y - 900) / 1000;
@@ -310,85 +326,106 @@ button{
     padding: 0px;
 }
 
+.scrollerContainer {
+    z-index: 5;
+    position: fixed;
+    display: flex;
+    min-width: 50vw;
+    justify-content: center;
+}
 
+
+.mouseImg {
+    z-index: 5;
+    position: fixed;
+    height: 8vh;
+    width: 8w;
+
+}
 </style>
 
 <body>
     {#if y > 50 && y < 1300}
-    <div class= 'aboutBackground' in:fade><img bind:this="{laptopSize}" src = {laptopImg} alt = 'laptop' class = 'laptopImg' style= 'transform: {1 + (y - 50) / 1000}'></div>
+        <div class= 'aboutBackground' in:fade><img bind:this="{laptopSize}" src = {laptopImg} alt = 'laptop' class = 'laptopImg' style= 'transform: {1 + (y - 50) / 1000}'></div>
     {:else if y < 50}
-    <div class = 'introPage'>
-    <div class = 'introContainer'>
-        <div class = 'headshotDiv'><img src= '/headshot.png' alt='headshot' class='headshotImg'></div>
-        <div class= 'typingDiv'>
-            <p class= "introText" >
-                <span class="inequalitySymbols">{lessThan}</span><span class='letterP'>
-                p</span><span class="inequalitySymbols">
-                {greaterThan}</span><span class=typingText>
-                {text}</span><span id="cursor" style="color: {cursorColor};">
-                |</span><span class="inequalitySymbols">
-                {lessThan}/</span><span class='letterP'>
-                p</span><span class="inequalitySymbols">
-                {greaterThan}</span>
-            </p>
+        <div class = 'introPage'>
+            <div class = 'introContainer'>
+                <div class = 'headshotDiv'>
+                    <img src= {'/headshot.png'} alt='headshot' class='headshotImg'>
+                </div>
+                <div class= 'typingDiv'>
+                    <p class= "introText" >
+                        <span class="inequalitySymbols">{lessThan}</span><span class='letterP'>
+                        p</span><span class="inequalitySymbols">
+                        {greaterThan}</span><span class=typingText>
+                        {text}</span><span id="cursor" style="color: {cursorColor};">
+                        |</span><span class="inequalitySymbols">
+                        {lessThan}/</span><span class='letterP'>
+                        p</span><span class="inequalitySymbols">
+                        {greaterThan}</span>
+                    </p>
+                    {#if showScroller == true}
+                        <div class='scrollerContainer' in:fade out:fly="{{y: 40, duration: 1000}}">
+                            <img src= {scrollImg} alt='mouseScroll' class = 'mouseImg'>
+                        </div>
+                    {/if}
+                </div>
+            </div>
         </div>
-    </div>
-    </div>
     {/if}
     {#if y > 50 && y < 1100}
         <div class='aboutPage'>
-        <div class='aboutContainer' in:fade>
-            <div>
-                <p>About</p>
+            <div class='aboutContainer' in:fade>
+                <div>
+                    <p>About</p>
+                </div>
+                <div class='aboutTextDiv'>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi voluptas, quo repellendus doloremque fuga reprehenderit incidunt quaerat saepe laboriosam, expedita tempora neque ad quisquam quam perferendis vel autem magnam hic?</p>
+                </div>
             </div>
-            <div class='aboutTextDiv'>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi voluptas, quo repellendus doloremque fuga reprehenderit incidunt quaerat saepe laboriosam, expedita tempora neque ad quisquam quam perferendis vel autem magnam hic?</p>
-            </div>
-        </div>
         </div>
     {/if}
     {#if y > 1400}
-    <div class='optionsDiv'>
-        <div class='leftOptionsDiv'>
-            {#if resume == true}
-                <button bind:this="{resumeTrans}" on:click = {() => buttonPressed('resume')} class='resumeDiv' style='background-color: red' transition:fly={{ x: -100, y: -100, duration: 1000 }}>
-                {#if projects == true}
-                    <p class='titleText'>Reusme</p>
-                    <img src='/placeholder.jpeg' alt='resumeIcon' class='optionsIcon'>
-                {/if}
-                </button>
-            {/if}
-            {#if projects == true}
-                <button bind:this="{projectsTrans}" on:click = {() => buttonPressed('projects')} class='projectsDiv' style='background-color: green;' transition:fly={{ x: -100, y: 100, duration: 1000 }}>
+        <div class='optionsDiv'>
+            <div class='leftOptionsDiv'>
                 {#if resume == true}
-                    <p class='titleText'>Projects</p>
-                    <img src='/placeholder.jpeg' alt='projectsIcon' class='optionsIcon'>
-                {/if}
-                </button>
-            {/if}
-        </div>
-
-        <div class='rightOptionsDiv'>
-            {#if experince == true}
-                <button bind:this="{experinceTrans}" on:click = {() => buttonPressed('experince')} class='experinceDiv' style='background-color: yellow;' transition:fly={{ x: 100, y: -100, duration: 1000 }}>
-                {#if projects == true}
-                    <p class='titleText'>Experince</p>
-                    <img src='/placeholder.jpeg' alt='experinceIcon' class='optionsIcon'>
-                {/if}
-                </button>
-            {/if}
-            {#if contact == true}
-                <button bind:this="{contactTrans}" on:click = {() => buttonPressed('contact')} class='contactDiv' style='background-color: blue;' transition:fly={{ x: 100, y: 100, duration: 1000 }}>
-                {#if projects == true}
-                    <p class='titleText'>Contact</p>
-                    <img src='/placeholder.jpeg' alt='contactIcon' class='optionsIcon'>
+                    <button bind:this="{resumeTrans}" on:click = {() => buttonPressed('resume')} class='resumeDiv' style='background-color: red' transition:fly={{ x: -100, y: -100, duration: 1000 }}>
+                    {#if projects == true}
+                        <p class='titleText'>Reusme</p>
+                        <img src='/placeholder.jpeg' alt='resumeIcon' class='optionsIcon'>
                     {/if}
-                </button>
-            {/if}
-        </div>
-    </div>
-    {/if}
+                    </button>
+                {/if}
+                {#if projects == true}
+                    <button bind:this="{projectsTrans}" on:click = {() => buttonPressed('projects')} class='projectsDiv' style='background-color: green;' transition:fly={{ x: -100, y: 100, duration: 1000 }}>
+                    {#if resume == true}
+                        <p class='titleText'>Projects</p>
+                        <img src='/placeholder.jpeg' alt='projectsIcon' class='optionsIcon'>
+                    {/if}
+                    </button>
+                {/if}
+            </div>
 
+            <div class='rightOptionsDiv'>
+                {#if experince == true}
+                    <button bind:this="{experinceTrans}" on:click = {() => buttonPressed('experince')} class='experinceDiv' style='background-color: yellow;' transition:fly={{ x: 100, y: -100, duration: 1000 }}>
+                        {#if projects == true}
+                            <p class='titleText'>Experince</p>
+                            <img src='/placeholder.jpeg' alt='experinceIcon' class='optionsIcon'>
+                        {/if}
+                    </button>
+                {/if}
+                {#if contact == true}
+                    <button bind:this="{contactTrans}" on:click = {() => buttonPressed('contact')} class='contactDiv' style='background-color: blue;' transition:fly={{ x: 100, y: 100, duration: 1000 }}>
+                    {#if projects == true}
+                        <p class='titleText'>Contact</p>
+                        <img src='/placeholder.jpeg' alt='contactIcon' class='optionsIcon'>
+                    {/if}
+                    </button>
+                {/if}
+            </div>
+        </div>
+    {/if}
 </body>
 
 <svelte:window bind:scrollY={y} bind:innerWidth={userWidth} />
