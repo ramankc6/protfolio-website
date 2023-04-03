@@ -212,7 +212,7 @@ body{
 
 .headshotImg {
     min-height: 56vh;
-    min-width: 56.5vh;
+    min-width: 31.25vw;
 }
 
 
