@@ -17,6 +17,7 @@ let textIndex = 0;
 let fullTextIndex = 0;
 let cursorIndex = 0;
 let mouseAnnimationIndex = 1;
+let scaleIndex = 1;
 
 //Changing Text Declaration
 let text = "";
@@ -54,6 +55,7 @@ let showScroller = false
 onMount(async () => {
     cursorAnnimation();
     imageResizer();
+    updateOptionsDiv();
 });
 
 //-------Functions-------//
@@ -140,25 +142,47 @@ function buttonPressed (buttonType) {
         contact = false;
         projects = false;
         experince = false;
-        resumeTrans.style.transform = `scale(${3})`;
+        resumeTrans.style.transform = `scale(${scaleIndex * 3})`;
+        experinceTrans.style.transform = `scale(${0})`;
+        contactTrans.style.transform = `scale(${0})`;
+        projectsTrans.style.transform = `scale(${0})`;
     } else if (buttonType == 'contact') {
         resume = false;
         projects = false;
         experince = false;
-        contactTrans.style.transform = `scale(${3})`;
+        contactTrans.style.transform = `scale(${scaleIndex * 3})`;
+        experinceTrans.style.transform = `scale(${0})`;
+        projectsTrans.style.transform = `scale(${0})`;
+        resumeTrans.style.transform = `scale(${0})`;
     } else if (buttonType == 'projects') {
         contact = false;
         resume = false;
         experince = false;
-        projectsTrans.style.transform = `scale(${3})`;
+        projectsTrans.style.transform = `scale(${scaleIndex * 3})`;
+        experinceTrans.style.transform = `scale(${0})`;
+        contactTrans.style.transform = `scale(${0})`;
+        resumeTrans.style.transform = `scale(${0})`;
     } else if (buttonType == 'experince') {
         contact = false;
         projects = false;
         resume = false;
-        experinceTrans.style.transform = `scale(${3})`;
+        experinceTrans.style.transform = `scale(${scaleIndex * 3})`;
+        projectsTrans.style.transform = `scale(${0})`;
+        contactTrans.style.transform = `scale(${0})`;
+        resumeTrans.style.transform = `scale(${0})`;
     }
 }
 
+function updateOptionsDiv() {
+    if (y <= 1400) {
+        resume = true;
+        projects = true;
+        experince = true;
+        contact = true;
+
+    }
+    setTimeout(updateOptionsDiv, 0)
+}
 </script>
 
 
@@ -298,7 +322,7 @@ body{
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    transition: 1.5s;
+    transition: transform 1.5s;
     /* border: 0; */
 }
 .resumeDiv:hover,
