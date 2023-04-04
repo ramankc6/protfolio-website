@@ -1,6 +1,4 @@
 
-
-
 <script lang="js">
 //-------Imports-------//
 
@@ -28,22 +26,26 @@ let cursorColor = "#aeafad";
 const fullText = ["Hey Snap!", "My name is Raman Khatri Chhetri"];
 const lessThan = '<';
 const greaterThan = '>';
+
+//Undefined Declarations
 let laptopSize;
 let resumeTrans;
-let experinceTrans;
+let skillsTrans;
 let contactTrans;
 let projectsTrans;
+let userWidth;
 
 //Scrolling Declaration
 let y = 0;
 let scale = 1;
-let userWidth;
+
+//Image Chnage Declaration
 let laptopImg = '/laptop.png';
 let scrollImg = '/mouseScroll.png';
 
 //Boolean Declarations
 let resume = true
-let experince = true
+let skills = true
 let contact = true
 let projects = true
 let showScroller = false
@@ -141,32 +143,32 @@ function buttonPressed (buttonType) {
     if (buttonType == 'resume') {
         contact = false;
         projects = false;
-        experince = false;
+        skills = false;
         resumeTrans.style.transform = `scale(${scaleIndex * 3})`;
-        experinceTrans.style.transform = `scale(${0})`;
+        skillsTrans.style.transform = `scale(${0})`;
         contactTrans.style.transform = `scale(${0})`;
         projectsTrans.style.transform = `scale(${0})`;
     } else if (buttonType == 'contact') {
         resume = false;
         projects = false;
-        experince = false;
+        skills = false;
         contactTrans.style.transform = `scale(${scaleIndex * 3})`;
-        experinceTrans.style.transform = `scale(${0})`;
+        skillsTrans.style.transform = `scale(${0})`;
         projectsTrans.style.transform = `scale(${0})`;
         resumeTrans.style.transform = `scale(${0})`;
     } else if (buttonType == 'projects') {
         contact = false;
         resume = false;
-        experince = false;
+        skills = false;
         projectsTrans.style.transform = `scale(${scaleIndex * 3})`;
-        experinceTrans.style.transform = `scale(${0})`;
+        skillsTrans.style.transform = `scale(${0})`;
         contactTrans.style.transform = `scale(${0})`;
         resumeTrans.style.transform = `scale(${0})`;
-    } else if (buttonType == 'experince') {
+    } else if (buttonType == 'skills') {
         contact = false;
         projects = false;
         resume = false;
-        experinceTrans.style.transform = `scale(${scaleIndex * 3})`;
+        skillsTrans.style.transform = `scale(${scaleIndex * 3})`;
         projectsTrans.style.transform = `scale(${0})`;
         contactTrans.style.transform = `scale(${0})`;
         resumeTrans.style.transform = `scale(${0})`;
@@ -177,7 +179,7 @@ function updateOptionsDiv() {
     if (y <= 1400) {
         resume = true;
         projects = true;
-        experince = true;
+        skills = true;
         contact = true;
 
     }
@@ -268,7 +270,6 @@ body{
 .laptopImg {
     width: 100%;
     height: 100%;
-    transition: transform 0.1s ease;
 }
 
 .aboutContainer {
@@ -314,7 +315,7 @@ body{
 
 .resumeDiv,
 .projectsDiv,
-.experinceDiv,
+.skillsDiv,
 .contactDiv {
     height: 100%;
     width: 100%;
@@ -327,7 +328,7 @@ body{
 }
 .resumeDiv:hover,
 .projectsDiv:hover,
-.experinceDiv:hover,
+.skillsDiv:hover,
 .contactDiv:hover {
     transition: 0.5s;
     height: 120%;
@@ -340,8 +341,8 @@ body{
 }
 
 .optionsIcon {
-    height: 25%;
-    width: 25%;
+    height: 12em;
+    width: 12em;
 
 }
 
@@ -415,8 +416,8 @@ button{
                 {#if resume == true}
                     <button bind:this="{resumeTrans}" on:click = {() => buttonPressed('resume')} class='resumeDiv' style='background-color: red' transition:fly={{ x: -100, y: -100, duration: 1000 }}>
                     {#if projects == true}
-                        <p class='titleText'>Reusme</p>
-                        <img src='/placeholder.jpeg' alt='resumeIcon' class='optionsIcon'>
+                        <p class='titleText'>Resume</p>
+                        <img src='/resumeIcon.png' alt='resumeIcon' class='optionsIcon'>
                     {/if}
                     </button>
                 {/if}
@@ -424,18 +425,18 @@ button{
                     <button bind:this="{projectsTrans}" on:click = {() => buttonPressed('projects')} class='projectsDiv' style='background-color: green;' transition:fly={{ x: -100, y: 100, duration: 1000 }}>
                     {#if resume == true}
                         <p class='titleText'>Projects</p>
-                        <img src='/placeholder.jpeg' alt='projectsIcon' class='optionsIcon'>
+                        <img src='/projectsIcon.png' alt='projectsIcon' class='optionsIcon'>
                     {/if}
                     </button>
                 {/if}
             </div>
 
             <div class='rightOptionsDiv'>
-                {#if experince == true}
-                    <button bind:this="{experinceTrans}" on:click = {() => buttonPressed('experince')} class='experinceDiv' style='background-color: yellow;' transition:fly={{ x: 100, y: -100, duration: 1000 }}>
+                {#if skills == true}
+                    <button bind:this="{skillsTrans}" on:click = {() => buttonPressed('skills')} class='skillsDiv' style='background-color: yellow;' transition:fly={{ x: 100, y: -100, duration: 1000 }}>
                         {#if projects == true}
-                            <p class='titleText'>Experince</p>
-                            <img src='/placeholder.jpeg' alt='experinceIcon' class='optionsIcon'>
+                            <p class='titleText'>Skills</p>
+                            <img src='/skillsIcon.png' alt='skillsIcon' class='optionsIcon'>
                         {/if}
                     </button>
                 {/if}
@@ -443,7 +444,7 @@ button{
                     <button bind:this="{contactTrans}" on:click = {() => buttonPressed('contact')} class='contactDiv' style='background-color: blue;' transition:fly={{ x: 100, y: 100, duration: 1000 }}>
                     {#if projects == true}
                         <p class='titleText'>Contact</p>
-                        <img src='/placeholder.jpeg' alt='contactIcon' class='optionsIcon'>
+                        <img src='/contactIcon.png' alt='contactIcon' class='optionsIcon'>
                     {/if}
                     </button>
                 {/if}
