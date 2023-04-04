@@ -43,13 +43,13 @@ let scale = 1;
 let laptopImg = '/laptop.png';
 let scrollImg = '/mouseScroll.png';
 
+
 //Boolean Declarations
 let resume = true
 let skills = true
 let contact = true
 let projects = true
 let showScroller = false
-
 
 //-------Start onMount-------//
 
@@ -61,6 +61,7 @@ onMount(async () => {
 });
 
 //-------Functions-------//
+
 
 //Scrolling Funtion
 
@@ -78,6 +79,10 @@ function cursorAnnimation() {
         }
     }
 }
+
+
+
+
 
 //Function that writes the text, goes back to cursor when done
 function writer() {
@@ -370,6 +375,7 @@ button{
 </style>
 
 <body>
+    <audio autoplay><source src='/music.mp3' type='audio/mpeg'></audio>
     {#if y > 50 && y < 1300}
         <div class= 'aboutBackground' in:fade><img bind:this="{laptopSize}" src = {laptopImg} alt = 'laptop' class = 'laptopImg' style= 'transform: {1 + (y - 50) / 1000}'></div>
     {:else if y < 50}
