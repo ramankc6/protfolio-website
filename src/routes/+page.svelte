@@ -472,6 +472,12 @@ button{
     width: 100%;
     height: 100%;
 }
+
+@media only screen and (max-width: 767px) {
+    .laptopImg{
+        max-height: 70%;
+    }
+}
 </style>
 
 <body>
