@@ -6,6 +6,7 @@
 import { onMount } from "svelte";
 import { fade } from 'svelte/transition';
 import { fly } from 'svelte/transition';
+import { slide } from 'svelte/transition';
 
 //-------Variable declarations-------//
 
@@ -15,10 +16,16 @@ let fullTextIndex = 0;
 let cursorIndex = 0;
 let mouseAnnimationIndex = 1;
 let scaleIndex = 1;
+let daysProgStart = 0;
+let daysProgEnd = 0;
+let gradYear = 2000;
+let numRepos = 0;
+let gpa = 0.0;
 
 //Changing Text Declaration
 let text = "";
 let cursorColor = "#aeafad";
+let toolsHover = '';
 
 //Const Text Declaration
 const fullText = ["Hey Snap!", "My name is Raman Khatri Chhetri"];
@@ -33,6 +40,7 @@ let contactTrans;
 let projectsTrans;
 let userWidth;
 let audio;
+let hoverTitle;
 
 //Scrolling Declaration
 let y = 0;
@@ -50,6 +58,9 @@ let contact = true
 let projects = true
 let showScroller = false
 let resumePage = false
+let skillsPage = false
+let now = new Date(), month, day, year;
+
 //-------Start onMount-------//
 
 //When the user loads the website it calls cusor Annimation which starts the typing annimation
@@ -58,13 +69,20 @@ onMount(async () => {
     cursorAnnimation();
     imageResizer();
     updateOptionsDiv();
-    drake();
+    // drake();
     y = 0;
+    findDate();
 
 });
 
 //-------Functions-------//
 
+function findDate() {
+    month = (now.getMonth());
+    day = now.getDate();
+    year = now.getFullYear();
+    daysProgEnd = (Math.floor((month * 30.437) + day + ((year - 2020) * 365.25))) - 817;
+}
 
 //Scrolling Funtion
 
@@ -138,6 +156,10 @@ function imageResizer() {
         laptopImg = '/phone.png'
         scrollImg = '/mobileScroll.png'
     }
+    else {
+        laptopImg = '/laptop.png'
+        scrollImg = '/mouseScroll.png'
+    }
     if (y > 900 && y < 1300) {
         scale = 1 + (y - 900) / 1000;
         laptopSize.style.transform = `scale(${scale})`;
@@ -181,13 +203,46 @@ function buttonPressed (buttonType) {
         projectsTrans.style.transform = `scale(${0})`;
         contactTrans.style.transform = `scale(${0})`;
         resumeTrans.style.transform = `scale(${0})`;
+        skillsPage = true;
+        dayProgAnimation();
+        gradYearAnimation();
+        reposAnimation();
+        gpaAnimation();
     }
 }
 
-function drake() {
-    audio.play();
-    setTimeout(drake, 100)
+function dayProgAnimation() {
+    if (daysProgStart < daysProgEnd) {
+        daysProgStart += 1;
+        setTimeout(dayProgAnimation, 0.02*daysProgStart)
+    }
 }
+
+function gradYearAnimation() {
+    if (gradYear < 2026) {
+        gradYear += 1;
+        setTimeout(gradYearAnimation, 0.06*gradYear)
+    }
+}
+
+function reposAnimation() {
+    if (numRepos < 16) {
+        numRepos += 1;
+        setTimeout(reposAnimation, 20*numRepos)
+    }
+}
+
+function gpaAnimation() {
+    if (gpa < 4.0) {
+        gpa += 0.01;
+        setTimeout(gpaAnimation, 0.1*gpa)
+    }
+}
+
+// function drake() {
+//     audio.play();
+//     setTimeout(drake, 100)
+// }
 
 function updateOptionsDiv() {
     if (y <= 1400) {
@@ -196,10 +251,54 @@ function updateOptionsDiv() {
         skills = true;
         contact = true;
         resumePage = false;
+        skillsPage = false;
+        daysProgStart = 0;
+        gradYear = 2000;
+        numRepos = 0;
+        gpa = 0;
 
     }
     setTimeout(updateOptionsDiv, 0)
 }
+
+function mouseOverLogo(logoType) {
+    if (logoType == 'aws') {
+        toolsHover = 'AWS'
+        hoverTitle.style.opacity = 1
+    }
+    else if (logoType == 'colab') {
+        toolsHover = 'Google Colab'
+        hoverTitle.style.opacity = 1
+    }
+    else if (logoType == 'figma') {
+        toolsHover = 'Figma'
+        hoverTitle.style.opacity = 1
+    }
+    else if (logoType == 'flutter') {
+        toolsHover = 'Flutter'
+        hoverTitle.style.opacity = 1
+    }
+    else if (logoType == 'git') {
+        toolsHover = 'Git'
+        hoverTitle.style.opacity = 1
+    }
+    else if (logoType == 'react') {
+        toolsHover = 'React'
+        hoverTitle.style.opacity = 1
+    }
+    else if (logoType == 'svelte') {
+        toolsHover = 'Svelte'
+        hoverTitle.style.opacity = 1
+    }
+    else if (logoType == 'tensorflow') {
+        toolsHover = 'Tensorflow'
+        hoverTitle.style.opacity = 1
+    }
+    else if (logoType == 'none') {
+        hoverTitle.style.opacity = 0
+    }
+}
+
 </script>
 
 
@@ -208,6 +307,7 @@ function updateOptionsDiv() {
 
 @import url('https://fonts.cdnfonts.com/css/cascadia-code');
 @import url('https://fonts.googleapis.com/css2?family=Palanquin+Dark&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap');
 
 body{
     background-color: #1e1e1e;
@@ -294,7 +394,7 @@ body{
 .aboutContainer {
     z-index: 3;
     position: fixed;
-    font-family: 'Cascadia Code', sans-serif;
+    font-family: 'Source Code Pro', monospace;
     text-align: center;
     font-size: 2vw;
     color:white;
@@ -346,7 +446,7 @@ body{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    transition: transform 1.5s;
+    transition: 1s;
     margin: 2%;
     border-radius: 4%;
     background-size: 110%;
@@ -420,7 +520,7 @@ button{
 .resumeTitle {
     color: white;
     background-color: #1e1e1e;
-    border-radius: 9%;
+    border-radius:40px/55%;
     min-width: 30%;
     text-align: center;
     color:white;
@@ -429,7 +529,6 @@ button{
     font-family: 'Palanquin Dark', sans-serif;
 }
 .projectsTitle {
-    color: white;
     min-width: 30%;
     text-align: center;
     color:white;
@@ -461,6 +560,7 @@ button{
     width: 100%;
     height: 100%;
     justify-content: center;
+    align-items: center;
 }
 
 .resumePageDiv {
@@ -473,11 +573,217 @@ button{
     height: 100%;
 }
 
+/* Skills Page */
+
+.skillsPageContainer {
+    z-index: 7;
+    display: flex;
+    position: fixed;
+    width: 90%;
+    height: 100%;
+    flex-direction: column;
+    justify-content: top;
+    align-items: center;
+    left:5%;
+}
+
+.skillsTitleDiv {
+    text-align: center;
+}
+
+.skillsTitleText {
+    font-size: 30px;
+    margin: 0%;
+    font-family: 'Palanquin Dark', sans-serif;
+    color: white;
+}
+
+.langDiv {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 50%;
+    border-bottom: 2px solid white;
+    padding-bottom: 1%;
+}
+
+.frontEndDiv {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    border-right: 2px solid white;
+    align-items: center;
+}
+
+.toolsDiv {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    align-items: center;
+}
+.backEndDiv {
+    display: flex;
+    flex-direction: column;
+    border-left: 2px solid white;
+    width: 30%;
+    align-items: center;
+}
+
+.infoDiv {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 35%;
+    padding-top: 1%;
+}
+.daysProgDiv,
+.gradYearDiv,
+.reposDiv,
+.gpaDiv {
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+}
+
+.gradYearDiv {
+    border-left: 2px solid white;
+    border-right: 2px solid white;
+}
+
+.reposDiv {
+    border-right: 2px solid white;
+
+}
+
+.frontEndTitle,
+.backEndTitle,
+.toolsTitle {
+    font-size: 20px;
+    margin: 0%;
+    font-family: 'Palanquin Dark', sans-serif;
+    color: white;
+}
+
+.langContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.langBoxes {
+    display: flex;
+    flex-direction: row;
+    width: 75%;
+    background-color: red;
+    border-radius:20px/50%;
+    margin: 0%;
+    transition: 0.5s;
+}
+
+.langText {
+    font-size: 20px;
+    margin: 0%;
+    font-family: 'Palanquin Dark', sans-serif;
+    color: white;
+    width: 100%;
+    text-align: center;
+}
+
+.langBoxes:hover {
+    width: 83%;
+    transition: 0.5s;
+}
+
+.toolsLogoContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 80%;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.toolsRow {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 25%;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.toolsLogoImg {
+    width: 15%;
+    height: 80%;
+}
+.infoNum {
+    font-size: 100px;
+    margin: 0%;
+    font-family: 'Palanquin Dark', sans-serif;
+    color: white;
+    width: 75%;
+    height: 60%;
+    text-align: center;
+    margin-bottom: 8%;
+    border-bottom: blue 10px solid;
+    align-self: center;
+    padding-bottom: 5%;
+    transform: scale(1);
+    transition: 0.5s;
+}
+
+.infoNum:hover {
+    transform: scale(1.1);
+    transition: 0.5s;
+}
+.infoTitle {
+    margin-left: 4%;
+    font-family: 'Palanquin Dark', sans-serif;
+    color: white;
+    width: 100%;
+    height: 40%;
+    text-align: center;
+}
+
+.infoText {
+    font-size: 100%;
+    margin: 0%;
+    font-family: 'Palanquin Dark', sans-serif;
+    color: white;
+    width: 100%;
+    height: 100%;
+    text-align: left;
+    margin: 0%;
+}
+
+.hoverTitle {
+    font-size: 40px;
+    margin: 0%;
+    font-family: 'Palanquin Dark', sans-serif;
+    color: white;
+    transition: 0.5s;
+}
+
 @media only screen and (max-width: 767px) {
     .laptopImg{
         max-height: 70%;
     }
-}
+    .langText {
+        font-size: 15px;
+    }
+    .infoNum {
+        font-size: 25px;
+    }
+    .infoTitle,
+    .infoText {
+        font-size: 10px;
+    }
+}   
 </style>
 
 <body>
@@ -567,7 +873,7 @@ button{
                 </div>
 
                 <div class='rightOptionsDiv'>
-                    {#if skills == true}
+                    {#if skills == true && skillsPage == false}
                         <button bind:this="{skillsTrans}" on:click = {() => buttonPressed('skills')} class='skillsDiv' style='background-image: url("/skillsBackground.png");' transition:fly={{ x: 100, y: -100, duration: 1000 }}>
                             {#if projects == true}
                             <div class='skillsTitle'>
@@ -576,6 +882,117 @@ button{
                             </div>
                             {/if}
                         </button>
+                    {/if}
+                    {#if skillsPage == true}
+                    <div transition:fade class='skillsPageContainer'>
+                        <div class= 'skillsTitleDiv'>
+                            <p class='skillsTitleText'>Skills</p>
+                        </div>
+                        <div class='langDiv'>
+                            <div class='frontEndDiv'>
+                                <div class='frontEndTitle'>
+                                    <p>Front End</p>
+                                </div>
+                                <div class = 'langContainer' transition:slide='{{axis: 'x', duration: 1000}}'>
+                                    <div class= 'langBoxes'>
+                                        <p class= 'langText'>HTML / CSS</p>
+                                    </div>
+                                    <div class= 'langBoxes'>
+                                        <p class= 'langText'>JavaScript</p>
+                                    </div>
+                                    <div class= 'langBoxes'>
+                                        <p class= 'langText'>TypeScript</p>
+                                    </div>
+                                    <div class= 'langBoxes'>
+                                        <p class= 'langText'>Dart</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class='toolsDiv'>
+                                <div class='toolsTitle'>
+                                    <p>Tools</p>
+                                </div>
+                                <div class='toolsLogoContainer'>
+                                    <div class='toolsRow'>
+                                        <img src='aws.png' alt='aws' class='toolsLogoImg' on:mouseover = {() => mouseOverLogo('aws')} on:mouseout = {() => mouseOverLogo('none')}>
+                                        <img src='colab.png' alt='colab' class='toolsLogoImg' on:mouseover = {() => mouseOverLogo('colab')} on:mouseout = {() => mouseOverLogo('none')}> 
+                                        <img src='figma.png' alt='figma' class='toolsLogoImg' on:mouseover = {() => mouseOverLogo('figma')} on:mouseout = {() => mouseOverLogo('none')}>
+                                        <img src='git.png' alt='git' class='toolsLogoImg' on:mouseover = {() => mouseOverLogo('git')} on:mouseout = {() => mouseOverLogo('none')}>
+                                    </div>
+                                    <div class= 'toolsRow'>
+                                        <p class= 'hoverTitle' bind:this="{hoverTitle}">{toolsHover}</p>
+                                    </div>
+                                    <div class='toolsRow'>
+                                        <img src='flutter.png' alt='flutter' class='toolsLogoImg' on:mouseover = {() => mouseOverLogo('flutter')} on:mouseout = {() => mouseOverLogo('none')}>
+                                        <img src='react.png' alt='react' class='toolsLogoImg' on:mouseover = {() => mouseOverLogo('react')} on:mouseout = {() => mouseOverLogo('none')}>
+                                        <img src='svelte.png' alt='svelte' class='toolsLogoImg' on:mouseover = {() => mouseOverLogo('svelte')} on:mouseout = {() => mouseOverLogo('none')}>
+                                        <img src='tensorflow.png' alt='awtensorflows' class='toolsLogoImg' on:mouseover = {() => mouseOverLogo('tensorflow')} on:mouseout = {() => mouseOverLogo('none')}>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class='backEndDiv'>
+                                <div class='backEndTitle'>
+                                    <p>Back End</p>
+                                </div>
+                                <div class = 'langContainer' transition:slide='{{axis: 'x', duration: 1000}}' >
+                                    <div class= 'langBoxes'>
+                                        <p class= 'langText'>Python</p>
+                                    </div>
+                                    <div class= 'langBoxes'>
+                                        <p class= 'langText'>Java</p>
+                                    </div>
+                                    <div class= 'langBoxes'>
+                                        <p class= 'langText'>C / C++</p>
+                                    </div>
+                                    <div class= 'langBoxes'>
+                                        <p class= 'langText'>Node.js</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class = 'infoDiv'>
+                            <div class='daysProgDiv'>
+                                <div class='infoNum'>
+                                    <p style='margin: 0; top: 0;'>{daysProgStart}</p>
+                                </div>
+                                <div>
+                                    <div class=infoTitle>
+                                        <p class= infoText>Days Programming <br> Started March 26th 2022</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class='gradYearDiv'>
+                                <div class='infoNum'>
+                                    <p style='margin: 0; top: 0;'>{gradYear}</p>
+                                </div>
+                                <div>
+                                    <div class=infoTitle>
+                                        <p class= infoText>Graduation Year <br> B.S. Computer Science</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class='reposDiv'>
+                                <div class='infoNum'>
+                                    <p style='margin: 0; top: 0;'>{numRepos}</p>
+                                </div>
+                                <div>
+                                    <div class=infoTitle>
+                                        <p class= infoText>GitHub Repos <br> Note: Not all hosted are on GitHub</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class='gpaDiv'>
+                                <div class='infoNum'>
+                                    <p style='margin: 0; top: 0;'>{gpa.toFixed(1)}</p>
+                                </div>
+                                <div>
+                                    <div class=infoTitle>
+                                        <p class= infoText>G.P.A. <br> 41 credits</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     {/if}
                     {#if contact == true}
                         <button bind:this="{contactTrans}" on:click = {() => buttonPressed('contact')} class='contactDiv' style='background-image: url("/contactBackground.png"); background-position: center;' transition:fly={{ x: 100, y: 100, duration: 1000 }}>
