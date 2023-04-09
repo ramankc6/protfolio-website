@@ -120,22 +120,22 @@ function writer() {
             setTimeout(cursorAnnimation, 500);
         } else {
             cursorColor = "#1e1e1e";
-            setTimeout(mouseAnnimation, 300)
+            showScroller = true;
         }
     }
 }
 
-function mouseAnnimation() {
-    if (mouseAnnimationIndex % 2 == 0) {
-        showScroller = false
-        mouseAnnimationIndex++
-        setTimeout(mouseAnnimation, 600)
-    } else{
-        showScroller = true
-        mouseAnnimationIndex++
-        setTimeout(mouseAnnimation, 1000)
-    }
-}
+// function mouseAnnimation() {
+//     if (mouseAnnimationIndex % 2 == 0) {
+//         showScroller = false
+//         mouseAnnimationIndex++
+//         setTimeout(mouseAnnimation, 600)
+//     } else{
+//         showScroller = true
+//         mouseAnnimationIndex++
+//         setTimeout(mouseAnnimation, 1000)
+//     }
+// }
 
 //Fnction that deletes the text, goes back to cursor when done
 function deleter() {
@@ -413,6 +413,7 @@ body{
 .headshotImg {
     min-height: 56vh;
     min-width: 31.25vw;
+    border-radius: 10%;
 }
 
 
@@ -533,6 +534,16 @@ button{
     display: flex;
     min-width: 50vw;
     justify-content: center;
+    animation: jump 0.7s infinite alternate;
+    margin-top: 2%;
+}
+@keyframes jump {
+0% {
+  transform: translateY(0);
+}
+100% {
+  transform: translateY(-15px);
+}
 }
 
 
@@ -1107,6 +1118,22 @@ button{
     .hoverTitle {
         font-size: 20px;
     }
+    .introText {
+        font-size: 4vw;
+    }
+    .scrollerContainer {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        margin-left: 0%;
+    }
+    .headshotImg {
+        min-height: 40vh;
+        min-width: 31.25vw;
+    }
 }   
 
 
@@ -1141,7 +1168,7 @@ button{
                         {greaterThan}</span>
                     </p>
                     {#if showScroller == true}
-                        <div class='scrollerContainer' in:fade out:fly="{{y: 40, duration: 1000}}">
+                        <div class='scrollerContainer'>
                             <img src= {scrollImg} alt='mouseScroll' class = 'mouseImg'>
                         </div>
                     {/if}
