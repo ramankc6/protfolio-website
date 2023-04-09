@@ -720,6 +720,7 @@ button{
 .toolsLogoImg {
     width: 15%;
     height: 80%;
+    aspect-ratio: 1/1;
 }
 .infoNum {
     font-size: 100px;
@@ -823,7 +824,31 @@ button{
     transform: scale(0.9);
     transition: 0.5s;
 }
+.contactDiv {
+    background-image: url("/contactBackground.png");
+    background-position: center;
+}
 
+.skillsDiv {
+    background-image: url("/skillsBackground.png");
+}
+
+.resumeDiv {
+    background-image: url("/resumeBackground.png");
+}
+
+#githubLogo {
+    aspect-ratio: 4/3;
+}
+.contactTitleDiv {
+        color: black;
+        width: 100%;
+        text-align: center;
+        font-size: 70px;
+        margin: 0%;
+        font-family: 'Palanquin Dark', sans-serif;
+        margin-top: 0%;
+}
 @media only screen and (max-width: 767px) {
     .laptopImg{
         max-height: 70%;
@@ -838,7 +863,74 @@ button{
     .infoText {
         font-size: 10px;
     }
+    .contactDiv {
+        background-image: url('/mobileContact.png');
+    }
+    .skillsDiv {
+    background-image: url("/mobileSkills.png");
+    }
+    .resumeDiv {
+        background-image: url("/mobileResume.png");
+    }
+    .contactBox {
+        background-image: url('/mobileContact.png');
+        background-size: 100%;
+        background-position: 4% 4%;
+        background-repeat: no-repeat;
+        width: 85%;
+        height: 95%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        border-radius:60px/5%;
+    }
+    .contactLogoImg {
+        background:none;
+        width: 100%;
+        height: 100%;
+        aspect-ratio: 1/1;
+    }
+    .contactButton {
+        background: none;
+        border: none;
+        height:100%;
+        margin-top: 14%;
+        margin-left: 3%;
+        /* background-color: white; */
+        border-radius: 10%;
+
+    }
+    .contactRow {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 10%;
+        align-items: center;
+        margin-top: 14%;
+        /* align-items: flex-start;
+        justify-content: flex-start; */
+    }
+    .contactTitleDiv {
+        color: black;
+        width: 100%;
+        text-align: center;
+        font-size: 40px;
+        margin: 0%;
+        font-family: 'Palanquin Dark', sans-serif;
+        margin-top: 0%;
+    }
+    .contactPageTitle {
+    padding-right: 0%;
+    width:100%;
+    }
+    .contactTitleText {
+        margin: 0%;
+        padding-bottom: 40%;
+    }
 }   
+
+
 </style>
 
 <body>
@@ -898,7 +990,7 @@ button{
             <div class='optionsDiv'>
                 <div class='leftOptionsDiv'>
                     {#if resume == true && resumePage == false}
-                        <button bind:this="{resumeTrans}" on:click = {() => buttonPressed('resume')} class='resumeDiv' style='background-image: url("/resumeBackground.png");' in:fly={{ x: -100, y: -100, duration: 1000 }} out:fade>
+                        <button bind:this="{resumeTrans}" on:click = {() => buttonPressed('resume')} class='resumeDiv' in:fly={{ x: -100, y: -100, duration: 1000 }} out:fade>
                         {#if projects == true}
                             <div class='resumeTitle'>
                             <p class='titleText'>Resume</p>
@@ -929,7 +1021,7 @@ button{
 
                 <div class='rightOptionsDiv'>
                     {#if skills == true && skillsPage == false}
-                        <button bind:this="{skillsTrans}" on:click = {() => buttonPressed('skills')} class='skillsDiv' style='background-image: url("/skillsBackground.png");' transition:fly={{ x: 100, y: -100, duration: 1000 }}>
+                        <button bind:this="{skillsTrans}" on:click = {() => buttonPressed('skills')} class='skillsDiv' transition:fly={{ x: 100, y: -100, duration: 1000 }}>
                             {#if projects == true}
                             <div class='skillsTitle'>
                                 <p class='titleText'>Skills</p>
@@ -938,7 +1030,7 @@ button{
                             {/if}
                         </button>
                     {/if}
-                    {#if skillsPage == true}
+                    {#if skillsPage == true }
                     <div transition:fade class='skillsPageContainer'>
                         <div class= 'skillsTitleDiv'>
                             <p class='skillsTitleText'>Skills</p>
@@ -1050,7 +1142,7 @@ button{
                     </div>
                     {/if}
                     {#if contact == true && contactPage == false}
-                        <button bind:this="{contactTrans}" on:click = {() => buttonPressed('contact')} class='contactDiv' style='background-image: url("/contactBackground.png"); background-position: center;' transition:fly={{ x: 100, y: 100, duration: 1000 }}>
+                        <button bind:this="{contactTrans}" on:click = {() => buttonPressed('contact')} class='contactDiv' transition:fly={{ x: 100, y: 100, duration: 1000 }}>
                         {#if projects == true}
                         <div class='contactTitle'>
                             <p class='titleText'>Contact</p>
@@ -1070,13 +1162,13 @@ button{
                                     </a>
                                 </div>
                                 <div class= 'contactRow' style='order: 1; margin-right:2%;'>
-                                    <a class='contactButton' href="mailto: ramankc24@gmail.com" target="_blank">
+                                    <a class='contactButton' id='githubLogo' href="mailto: ramankc24@gmail.com" target="_blank">
                                         <img src='email.png' alt='email' class='contactLogoImg'>
                                     </a>
                                 </div>
                                 <div class= 'contactPageTitle' style='order: -1;'>
-                                    <div class = 'contactTitle' style='font-size:70px'>
-                                        <p>Get in touch!</p>
+                                    <div class = 'contactTitleDiv'>
+                                        <p class='contactTitleText'>Get In Touch!</p>
                                     </div>
                                 </div>
                             </div>
