@@ -1104,6 +1104,9 @@ button{
     .projectTitle {
         font-size: 10px;
     }
+    .hoverTitle {
+        font-size: 20px;
+    }
 }   
 
 
