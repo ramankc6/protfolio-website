@@ -29,7 +29,7 @@ let toolsHover = '';
 let selectedProject = 'none';
 
 //Const Text Declaration
-const fullText = ["Hey Snap!", "My name is Raman Khatri Chhetri"];
+const fullText = ["Hey Everyone!", "My name is Raman Khatri Chhetri"];
 const lessThan = '<';
 const greaterThan = '>';
 
@@ -72,7 +72,7 @@ onMount(async () => {
     imageResizer();
     updateOptionsDiv();
     // drake();
-    // y = 0;
+    y = 0;
     findDate();
 
 });
@@ -162,7 +162,7 @@ function imageResizer() {
         laptopImg = '/laptop.png'
         scrollImg = '/mouseScroll.png'
     }
-    if (y > 900 && y < 1300) {
+    if (y > 900 && y < 1700) {
         scale = 1 + (y - 900) / 1000;
         laptopSize.style.transform = `scale(${scale})`;
         setTimeout(imageResizer, 0)
@@ -268,6 +268,24 @@ function updateOptionsDiv() {
     setTimeout(updateOptionsDiv, 0)
 }
 
+function backButton(pressedButton) {
+    if (pressedButton == 'back') {
+        y = 1700;
+        resume = true;
+        projects = true;
+        skills = true;
+        contact = true;
+        resumePage = false;
+        skillsPage = false;
+        daysProgStart = 0;
+        gradYear = 2000;
+        numRepos = 0;
+        gpa = 0;
+        contactPage = false;
+        projectsPage = false;
+    }
+}
+
 function mouseOverLogo(logoType) {
     if (logoType == 'aws') {
         toolsHover = 'AWS'
@@ -333,7 +351,7 @@ function mouseOverProjects(project) {
 
 body{
     background-color: #1e1e1e;
-    min-height: 10000px;
+    min-height: 3500px;
     margin: 0;
     background-size: 110%;
     background-position: 4% 4%;
@@ -978,6 +996,31 @@ button{
     transform: scale(0.9);
     transition: 0.5s;
 }
+
+.back {
+    height: 5%;
+    margin-top: 5%;
+    transition: 0.5s;
+    z-index: 100;
+    position: fixed;
+    outline: none;
+    border: 2px solid white;
+    background: none;
+    color: black;
+    margin-left: 5%;
+    background-color: lightgoldenrodyellow;
+    font: 20px 'Palanquin Dark', sans-serif;
+    border-radius: 50px;
+}
+.backText {
+    padding: 0px;
+    margin: 0px;
+}
+
+.back:hover {
+    transform: scale(0.9);
+    transition: 0.5s;
+}
 @media only screen and (max-width: 767px) {
     .laptopImg{
         max-height: 70%;
@@ -1058,16 +1101,24 @@ button{
         margin: 0%;
         padding-bottom: 40%;
     }
+    .projectTitle {
+        font-size: 10px;
+    }
 }   
 
 
 </style>
 
 <body>
+    {#if projectsPage || contactPage || skillsPage || resumePage}
+    <button class = 'back' on:click = {() => backButton('back')}>
+        <p class = 'backText'>Back</p>
+    </button>
+    {/if}
     <!-- <audio controls autoplay bind:this={audio}>
         <source src='/music.mp3' type='audio/mp3'>
     </audio> -->
-    {#if y > 50 && y < 1300}
+    {#if y > 50 && y < 1700}
         <div class= 'aboutBackground' in:fade><img bind:this="{laptopSize}" src = {laptopImg} alt = 'laptop' class = 'laptopImg' style= 'transform: {1 + (y - 50) / 1000}'></div>
     {:else if y < 50}
         <div class = 'introPage'>
@@ -1095,7 +1146,7 @@ button{
             </div>
         </div>
     {/if}
-    {#if y > 50 && y < 1100}
+    {#if y > 50 && y < 1200}
         <div class='aboutPage'>
             <div class='aboutContainer' in:fade>
                 <div>
@@ -1110,12 +1161,12 @@ button{
                     </p>
                 </div>
                 <div class='aboutTextDiv'>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi voluptas, quo repellendus doloremque fuga reprehenderit incidunt quaerat saepe laboriosam, expedita tempora neque ad quisquam quam perferendis vel autem magnam hic?</p>
+                    <p>I am a full-stack Software Engineer with experince in web development, mobile development, data science and ML. I am always looking for new oppurtunies to improve my skills through projects and internships. You can navigate my portfolio by scrolling up and down!</p>
                 </div>
             </div>
         </div>
     {/if}
-    {#if y > 1400}
+    {#if y > 1600}
         <div class ='optionsPage'>
             <div class='optionsDiv'>
                 <div class='leftOptionsDiv'>
