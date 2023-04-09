@@ -26,6 +26,7 @@ let gpa = 0.0;
 let text = "";
 let cursorColor = "#aeafad";
 let toolsHover = '';
+let selectedProject = 'none';
 
 //Const Text Declaration
 const fullText = ["Hey Snap!", "My name is Raman Khatri Chhetri"];
@@ -61,6 +62,7 @@ let resumePage = false
 let skillsPage = false
 let now = new Date(), month, day, year;
 let contactPage = false
+let projectsPage = false
 //-------Start onMount-------//
 
 //When the user loads the website it calls cusor Annimation which starts the typing annimation
@@ -197,6 +199,7 @@ function buttonPressed (buttonType) {
         skillsTrans.style.transform = `scale(${0})`;
         contactTrans.style.transform = `scale(${0})`;
         resumeTrans.style.transform = `scale(${0})`;
+        projectsPage = true;
     } else if (buttonType == 'skills') {
         contact = false;
         projects = false;
@@ -259,6 +262,7 @@ function updateOptionsDiv() {
         numRepos = 0;
         gpa = 0;
         contactPage = false;
+        projectsPage = false;
 
     }
     setTimeout(updateOptionsDiv, 0)
@@ -302,6 +306,21 @@ function mouseOverLogo(logoType) {
     }
 }
 
+function mouseOverProjects(project) {
+    if (project == 'none'){
+        selectedProject = 'none'
+    } else if (project == 'portfolio') {
+        selectedProject = 'portfolio'
+    } else if (project == 'phitNest') {
+        selectedProject = 'phitNest'
+    } else if (project == 'wordle') {
+        selectedProject = 'wordle'
+    } else if (project == 'co2') {
+        selectedProject = 'co2'
+    } else if (project == 'noFearSpeak') {
+        selectedProject = 'noFearSpeak'
+    }
+}  
 </script>
 
 
@@ -518,7 +537,6 @@ button{
 }
 
 .resumeTitle {
-    color: white;
     background-color: #1e1e1e;
     border-radius:40px/55%;
     min-width: 30%;
@@ -841,13 +859,124 @@ button{
     aspect-ratio: 4/3;
 }
 .contactTitleDiv {
-        color: black;
-        width: 100%;
-        text-align: center;
-        font-size: 70px;
-        margin: 0%;
-        font-family: 'Palanquin Dark', sans-serif;
-        margin-top: 0%;
+    color: black;
+    width: 100%;
+    text-align: center;
+    font-size: 70px;
+    margin: 0%;
+    font-family: 'Palanquin Dark', sans-serif;
+    margin-top: 0%;
+}
+
+.projectsPageContainer {
+    z-index: 9;
+    display: flex;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    /* right: 5.1%; */
+    /* bottom: 5vh;
+    top: 0.5vh; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    left:0;
+    top:0;
+    right:0;
+    bottom:0;
+    
+}
+
+.projectsTitleDiv {
+    color: white;
+    width: 100%;
+    text-align: center;
+    font-size: 70px;
+    margin: 0%;
+    font-family: 'Palanquin Dark', sans-serif;
+    margin-top: 0%;
+}
+
+.projectsLogosContainer {
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    height: 40%;
+    justify-content: space-evenly;
+}
+
+.portfolioDiv,
+.phitNestDiv,
+.wordleDiv,
+.co2Div,
+.noFearSpeakDiv {
+    width: 10%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: 0.5s;
+}
+
+.projectLogo {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 1/1;
+}
+
+.discription {
+    width: 95%;
+    height: 100%;
+    transition: 0.5s;
+    margin-bottom: 3%;
+    margin-top:3%;
+    border-radius: 10px;
+    border: 3px solid white;
+    color: white;
+}
+
+.linkImg {
+    width: 4%;
+    height: 4%;
+    aspect-ratio: 1/1;
+
+}
+.discriptionText {
+    font-size: 15px;
+    font-family: 'Palanquin Dark', sans-serif;
+    color: white;
+    text-align: left;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+.discriptionTitle {
+    font-size: 20px;
+    font-family: 'Palanquin Dark', sans-serif;
+    text-align: left;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+.techStack {
+    margin-left: 2%;
+    margin-right: 2%;
+}
+.discription_Links{
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+.projectTitle {
+    font-size: 20px;
+    font-family: 'Palanquin Dark', sans-serif;
+    color: white;
+    text-align: center;
+}
+.linkImg:hover {
+    transform: scale(0.9);
+    transition: 0.5s;
 }
 @media only screen and (max-width: 767px) {
     .laptopImg{
@@ -865,6 +994,7 @@ button{
     }
     .contactDiv {
         background-image: url('/mobileContact.png');
+        background-position: top;
     }
     .skillsDiv {
     background-image: url("/mobileSkills.png");
@@ -1007,7 +1137,7 @@ button{
                         </div>
                     </div>
                     {/if}
-                    {#if projects == true}
+                    {#if projects == true && projectsPage == false}
                         <button bind:this="{projectsTrans}" on:click = {() => buttonPressed('projects')} class='projectsDiv' style='background-image: url("/projectBackground.png");' transition:fly={{ x: -100, y: 100, duration: 1000 }}>
                         {#if resume == true}
                             <div class='projectsTitle'>
@@ -1017,8 +1147,116 @@ button{
                         {/if}
                         </button>
                     {/if}
+                    {#if projectsPage == true}
+                    <div transition:fade class='projectsPageContainer'>
+                            <div class='projectsTitleDiv'>
+                                <p class='projectsTitleText'>Projects</p>
+                            </div>
+                            <div class='projectsLogosContainer'>
+                                <div class='portfolioDiv' on:mouseover = {() => mouseOverProjects('portfolio')} on:mouseout = {() => mouseOverLogo('none')} on:focus on:blur>
+                                    <img src='/headshot.png' alt='headshot' class='projectLogo'>
+                                    <p class='projectTitle'>Portfolio</p>
+                                </div>
+                                <div class='phitNestDiv' on:mouseover = {() => mouseOverProjects('phitNest')} on:mouseout = {() => mouseOverLogo('none')} on:focus on:blur>
+                                    <img src='/phitnest.png' alt='headshot' class='projectLogo'>
+                                    <p class='projectTitle'>PhitNest</p>
+                                </div>
+                                <div class='wordleDiv' on:mouseover = {() => mouseOverProjects('wordle')} on:mouseout = {() => mouseOverLogo('none')} on:focus on:blur>
+                                    <img src='/wordle.png' alt='headshot' class='projectLogo'>
+                                    <p class='projectTitle'>Wordle Solver</p>
+                                </div>
+                                <div class='co2Div' on:mouseover = {() => mouseOverProjects('co2')} on:mouseout = {() => mouseOverLogo('none')} on:focus on:blur>
+                                    <img src='/co2.png' alt='headshot' class='projectLogo'>
+                                    <p class='projectTitle'>CO2 Calculator</p>
+                                </div>
+                                <div class='noFearSpeakDiv' on:mouseover = {() => mouseOverProjects('noFearSpeak')} on:mouseout = {() => mouseOverLogo('none')} on:focus on:blur>
+                                    <img src='/nofearspeak.png' alt='headshot' class='projectLogo'>
+                                    <p class='projectTitle'>NoFearSpeak</p>
+                                </div>
+                            </div>
+                            {#if selectedProject == 'none'}
+                            <div class = 'discription'>
+                                <h2 class='discriptionTitle'> Hover Over An Image</h2>
+                                <p class='discriptionText'></p>
+                                <h3><b></b></h3>
+                                <div class= 'discription_Links'>
+                                </div>
+                            </div>
+                            {/if}
+                            {#if selectedProject == 'portfolio'}
+                            <div class = 'discription'>
+                                <h2 class='discriptionTitle'>Portfolio</h2>
+                                <p class='discriptionText'>This is my first personal web development project. My intention was to create a page where I can showcase all the new 
+                                    projects I am working on and to also have a place where I can share my resume and contact information. I used Svelte to create this page and
+                                    I am very happy with the results. I am looking forward to adding more projects to this page and to continue to improve the design and functionality.
+                                </p>
+                                <p class= 'techStack'><b>Tech Stack: </b>HTML, CSS, JavaScript, Svelte, Netlify</p>
+                                <div class= 'discription_Links'>
+                                    <a href='https://github.com/ramankc6/protfolio-website' target='_blank' class='discriptionLink'><img src='/github.png' alt='github' class = 'linkImg'></a>
+                                    <a href='https://ramankhatri.com/' target='_blank' class='discriptionLink'><img src='/link.png' alt='github'class = 'linkImg'></a>
+                                </div>
+                            </div>
+                            {/if}
+                            {#if selectedProject == 'phitNest'}
+                            <div class = 'discription'>
+                                <h2 class='discriptionTitle'>PhitNest</h2>
+                                <p class='discriptionText'>PhitNest is a mobile app start-up that I am interning for. I initially worked most only on their mobile development team but shifted to Web Dev.
+                                    As a Web Development Intern, I am indepently creating and maintaining the company's website. Though the design is created by the marketing team, most if not all the development is done by me.
+                                    I am very excited to be working for PhitNest and I am looking forward to seeing 
+                                    what the future holds for the company.
+                                </p>
+                                <p class= 'techStack'><b>Tech Stack: </b>HTML, CSS, TypeScript, React, Svelte, AWS, Git</p>
+                                <div class= 'discription_Links'>
+                                    <a href='https://phitnest.com' target='_blank' class='discriptionLink'><img src='/link.png' alt='github' class = 'linkImg'></a>
+                                </div>
+                            </div>
+                            {/if}
+                            {#if selectedProject == 'wordle'}
+                            <div class = 'discription'>
+                                <h2 class='discriptionTitle'>Wordle Solver</h2>
+                                <p class='discriptionText'>This is a algorytm that uses entropy and other sorting techniques to find answers to wordle. 
+                                    I used techniques like cashe, parallelization and heuristics to make this program as fast as possible without sacrificing accuracy.
+                                    I learned alot about data structures and alorythms while working on this project. I was able to achive a 95% accuracy rate after running 2000 tests in 20 seconds.
+                                    I am very proud of this project and I am looking forward to taking on more projects like this in the future since it really helped peak my interest in data structures and algorithms.
+                                </p>
+                                <p class= 'techStack'><b>Tech Stack: </b>Python, Google Colab, Git</p>
+                                <div class= 'discription_Links'>
+                                    <a href='https://github.com/ramankc6/wordle-solver' target='_blank' class='discriptionLink'><img src='/github.png' alt='github' class = 'linkImg'></a>
+                                </div>
+                            </div>
+                            {/if}
+                            {#if selectedProject == 'co2'}
+                            <div class = 'discription'>
+                                <h2 class='discriptionTitle'>Co2 Emissions Algorytm</h2>
+                                <p class='discriptionText'>This project was my introduction to machine learning and it was love at first pipeline. I made this during
+                                    VTHacks22, where it garnered the attention of the Hackathon's main sponsor, Capgemini. Though I was on a team for this Hackathon, all work done for this algorythm was independently done by me.
+                                    I was able to get a 88% accuracy rate. I used a linear regression model to predict the amount of co2 emissions
+                                    a car would produce based on the cars make, model, year, and fuel type. This project inspired me to continue to learn more about machine learning and have been working on a few other related projects since.
+                                </p>
+                                <p class= 'techStack'><b>Tech Stack: </b>Python, Tensorflow, Google Colab</p>
+                                <div class= 'discription_Links'>
+                                    <a href='https://github.com/ramankc6/CO2-Prediction-Algorithm' target='_blank' class='discriptionLink'><img src='/github.png' alt='github' class = 'linkImg'></a>
+                                </div>
+                            </div>
+                            {/if}
+                            {#if selectedProject == 'noFearSpeak'}
+                            <div class = 'discription'>
+                                <h2 class='discriptionTitle'>NoFearSpeak</h2>
+                                <p class='discriptionText'>NoFearSpeak was a group project for a Hackathon called HackViolet. It is a cross platform app that allows
+                                    users to anonymously report harassment in the work place. I played a product manager role during this project. I helped my teammate with 
+                                    the design while also working on developing the front end using Flutter. I also created the back-end which allowed the app to 
+                                    communicate with the database and allowed user to dynamically search though the companies and the people.
+                                </p>
+                                <p class= 'techStack'><b>Tech Stack: </b>Dart, Flutter, Firebase, Xcode, Google Cloud, Git</p>
+                                <div class= 'discription_Links'>
+                                    <a href='https://github.com/ramankc6/NoFearSpeak' target='_blank' class='discriptionLink'><img src='/github.png' alt='github' class = 'linkImg'></a>
+                                    <a href='https://devpost.com/software/safenest-j0x5bi' target='_blank' class='discriptionLink'><img src='/devpost.png' alt='github'class = 'linkImg'></a>
+                                </div>
+                            </div>
+                            {/if}
+                    </div>
+                    {/if}
                 </div>
-
                 <div class='rightOptionsDiv'>
                     {#if skills == true && skillsPage == false}
                         <button bind:this="{skillsTrans}" on:click = {() => buttonPressed('skills')} class='skillsDiv' transition:fly={{ x: 100, y: -100, duration: 1000 }}>
