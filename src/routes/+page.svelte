@@ -780,7 +780,7 @@ button{
     top: 0.5vh; */
 }
 .contactBox {
-    background-image: url('contactBackground.png');
+    background-image: url('/contactBackground.png');
     background-size: 100%;
     background-position: 4% 4%;
     background-repeat: no-repeat;
@@ -1056,7 +1056,7 @@ button{
                         </button>
                     {/if}
                     {#if contactPage == true}
-                        <div class='contactPageContainer'>
+                        <div class='contactPageContainer' transition:fade>
                             <div class='contactBox'>
                                 <div class= 'contactRow' style='order: 2;'>
                                     <a class='contactButton' href="https://github.com/ramankc6" target="_blank">
