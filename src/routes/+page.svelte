@@ -41,6 +41,7 @@ let projectsTrans;
 let userWidth;
 let audio;
 let hoverTitle;
+let body;
 
 //Scrolling Declaration
 let y = 0;
@@ -49,7 +50,6 @@ let scale = 1;
 //Image Chnage Declaration
 let laptopImg = '/laptop.png';
 let scrollImg = '/mouseScroll.png';
-
 
 //Boolean Declarations
 let resume = true
@@ -60,17 +60,17 @@ let showScroller = false
 let resumePage = false
 let skillsPage = false
 let now = new Date(), month, day, year;
-
+let contactPage = false
 //-------Start onMount-------//
 
 //When the user loads the website it calls cusor Annimation which starts the typing annimation
 onMount(async () => {
-    alert('This website is still under construction, please excuse the mess')
+    // alert('This website is still under construction, please excuse the mess')
     cursorAnnimation();
     imageResizer();
     updateOptionsDiv();
     // drake();
-    y = 0;
+    // y = 0;
     findDate();
 
 });
@@ -172,13 +172,14 @@ function imageResizer() {
 function buttonPressed (buttonType) {
     if (buttonType == 'resume') {
         contact = false;
-        resumePage = true;
         projects = false;
         skills = false;
         resumeTrans.style.transform = `scale(${scaleIndex * 3})`;
         skillsTrans.style.transform = `scale(${0})`;
         contactTrans.style.transform = `scale(${0})`;
         projectsTrans.style.transform = `scale(${0})`;
+        resumePage = true;
+        
     } else if (buttonType == 'contact') {
         resume = false;
         projects = false;
@@ -187,6 +188,7 @@ function buttonPressed (buttonType) {
         skillsTrans.style.transform = `scale(${0})`;
         projectsTrans.style.transform = `scale(${0})`;
         resumeTrans.style.transform = `scale(${0})`;
+        contactPage = true;
     } else if (buttonType == 'projects') {
         contact = false;
         resume = false;
@@ -256,6 +258,7 @@ function updateOptionsDiv() {
         gradYear = 2000;
         numRepos = 0;
         gpa = 0;
+        contactPage = false;
 
     }
     setTimeout(updateOptionsDiv, 0)
@@ -313,6 +316,8 @@ body{
     background-color: #1e1e1e;
     min-height: 10000px;
     margin: 0;
+    background-size: 110%;
+    background-position: 4% 4%;
 }
 
 #cursor {
@@ -477,12 +482,6 @@ body{
     font-size: 40px;
     margin: 0%;
     font-family: 'Palanquin Dark', sans-serif;
-}
-
-.optionsIcon {
-    height: 12em;
-    width: 12em;
-
 }
 
 button{
@@ -769,6 +768,59 @@ button{
     transition: 0.5s;
 }
 
+.contactPageContainer {
+    z-index: 9;
+    display: flex;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 7.3%;
+    /* right: 5.1%; */
+    /* bottom: 5vh;
+    top: 0.5vh; */
+}
+.contactBox {
+    background-image: url('contactBackground.png');
+    background-size: 100%;
+    background-position: 4% 4%;
+    background-repeat: no-repeat;
+    width: 85%;
+    height: 95%;
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+
+
+}
+.contactLogoImg {
+    background:none;
+    width: 100%;
+    height: 100%;
+}
+.contactButton {
+    background: none;
+    border: none;
+    height:10%;
+    margin-top: 60%;
+}
+.contactRow {
+    display: flex;
+    flex-direction: column;
+    width: 10%;
+    height: 100%;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-right: 5%;
+}
+.contactPageTitle {
+    padding-right: 34%;
+}
+
+.contactButton:hover {
+    transform: scale(0.9);
+    transition: 0.5s;
+}
+
 @media only screen and (max-width: 767px) {
     .laptopImg{
         max-height: 70%;
@@ -914,19 +966,19 @@ button{
                                 </div>
                                 <div class='toolsLogoContainer'>
                                     <div class='toolsRow'>
-                                        <img src='aws.png' alt='aws' class='toolsLogoImg' on:mouseover = {() => mouseOverLogo('aws')} on:mouseout = {() => mouseOverLogo('none')}>
-                                        <img src='colab.png' alt='colab' class='toolsLogoImg' on:mouseover = {() => mouseOverLogo('colab')} on:mouseout = {() => mouseOverLogo('none')}> 
-                                        <img src='figma.png' alt='figma' class='toolsLogoImg' on:mouseover = {() => mouseOverLogo('figma')} on:mouseout = {() => mouseOverLogo('none')}>
-                                        <img src='git.png' alt='git' class='toolsLogoImg' on:mouseover = {() => mouseOverLogo('git')} on:mouseout = {() => mouseOverLogo('none')}>
+                                        <img src='aws.png' alt='aws' class='toolsLogoImg' on:mouseover = {() => mouseOverLogo('aws')} on:mouseout = {() => mouseOverLogo('none')} on:focus on:blur>
+                                        <img src='colab.png' alt='colab' class='toolsLogoImg' on:mouseover = {() => mouseOverLogo('colab')} on:mouseout = {() => mouseOverLogo('none')} on:focus on:blur> 
+                                        <img src='figma.png' alt='figma' class='toolsLogoImg' on:mouseover = {() => mouseOverLogo('figma')} on:mouseout = {() => mouseOverLogo('none')} on:focus on:blur>
+                                        <img src='git.png' alt='git' class='toolsLogoImg' on:mouseover = {() => mouseOverLogo('git')} on:mouseout = {() => mouseOverLogo('none')} on:focus on:blur>
                                     </div>
                                     <div class= 'toolsRow'>
                                         <p class= 'hoverTitle' bind:this="{hoverTitle}">{toolsHover}</p>
                                     </div>
                                     <div class='toolsRow'>
-                                        <img src='flutter.png' alt='flutter' class='toolsLogoImg' on:mouseover = {() => mouseOverLogo('flutter')} on:mouseout = {() => mouseOverLogo('none')}>
-                                        <img src='react.png' alt='react' class='toolsLogoImg' on:mouseover = {() => mouseOverLogo('react')} on:mouseout = {() => mouseOverLogo('none')}>
-                                        <img src='svelte.png' alt='svelte' class='toolsLogoImg' on:mouseover = {() => mouseOverLogo('svelte')} on:mouseout = {() => mouseOverLogo('none')}>
-                                        <img src='tensorflow.png' alt='awtensorflows' class='toolsLogoImg' on:mouseover = {() => mouseOverLogo('tensorflow')} on:mouseout = {() => mouseOverLogo('none')}>
+                                        <img src='flutter.png' alt='flutter' class='toolsLogoImg' on:mouseover = {() => mouseOverLogo('flutter')} on:mouseout = {() => mouseOverLogo('none')} on:focus on:blur>
+                                        <img src='react.png' alt='react' class='toolsLogoImg' on:mouseover = {() => mouseOverLogo('react')} on:mouseout = {() => mouseOverLogo('none')} on:focus on:blur>
+                                        <img src='svelte.png' alt='svelte' class='toolsLogoImg' on:mouseover = {() => mouseOverLogo('svelte')} on:mouseout = {() => mouseOverLogo('none')} on:focus on:blur>
+                                        <img src='tensorflow.png' alt='awtensorflows' class='toolsLogoImg' on:mouseover = {() => mouseOverLogo('tensorflow')} on:mouseout = {() => mouseOverLogo('none')} on:focus on:blur>
                                     </div>
                                 </div>
                             </div>
@@ -994,7 +1046,7 @@ button{
                         </div>
                     </div>
                     {/if}
-                    {#if contact == true}
+                    {#if contact == true && contactPage == false}
                         <button bind:this="{contactTrans}" on:click = {() => buttonPressed('contact')} class='contactDiv' style='background-image: url("/contactBackground.png"); background-position: center;' transition:fly={{ x: 100, y: 100, duration: 1000 }}>
                         {#if projects == true}
                         <div class='contactTitle'>
@@ -1002,6 +1054,30 @@ button{
                         </div>
                         {/if}
                         </button>
+                    {/if}
+                    {#if contactPage == true}
+                        <div class='contactPageContainer' transition:fade>
+                            <div class='contactBox'>
+                                <div class= 'contactRow' style='order: 2;'>
+                                    <a class='contactButton' href="https://github.com/ramankc6" target="_blank">
+                                        <img src='github.png' alt='github' class='contactLogoImg'>
+                                    </a>
+                                    <a class='contactButton' href="https://www.linkedin.com/in/raman-khatri/" target="_blank">
+                                        <img src='linkedin.png' alt='linkedin' class='contactLogoImg'>
+                                    </a>
+                                </div>
+                                <div class= 'contactRow' style='order: 1; margin-right:2%;'>
+                                    <a class='contactButton' href="mailto: ramankc24@gmail.com" target="_blank">
+                                        <img src='email.png' alt='email' class='contactLogoImg'>
+                                    </a>
+                                </div>
+                                <div class= 'contactPageTitle' style='order: -1;'>
+                                    <div class = 'contactTitle' style='font-size:70px'>
+                                        <p>Get in touch!</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     {/if}
                 </div>
             </div>
