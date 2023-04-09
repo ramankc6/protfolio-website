@@ -1056,7 +1056,7 @@ button{
                         </button>
                     {/if}
                     {#if contactPage == true}
-                        <div class='contactPageContainer' transition:fade>
+                        <div class='contactPageContainer'>
                             <div class='contactBox'>
                                 <div class= 'contactRow' style='order: 2;'>
                                     <a class='contactButton' href="https://github.com/ramankc6" target="_blank">
