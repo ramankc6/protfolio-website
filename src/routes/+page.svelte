@@ -394,6 +394,7 @@ body{
 .laptopImg {
     width: 85%;
     height: 85%;
+    aspect-ratio: 307.38/520.33;
 }
 
 .aboutContainer {
@@ -796,12 +797,14 @@ button{
     background:none;
     width: 100%;
     height: 100%;
+    aspect-ratio: 1/1;
 }
 .contactButton {
     background: none;
     border: none;
     height:10%;
     margin-top: 60%;
+    aspect-ratio: 1/1;
 }
 .contactRow {
     display: flex;
