@@ -40,6 +40,7 @@ let skillsTrans;
 let contactTrans;
 let projectsTrans;
 let userWidth;
+let audio;
 let hoverTitle;
 let body;
 
@@ -59,8 +60,7 @@ let projects = true
 let showScroller = false
 let resumePage = false
 let skillsPage = false
-// let now = new Date(), month, day, year;
-let now = new Date(2020, 8, 1), month, day, year;
+let now = new Date(), month, day, year;
 let contactPage = false
 let projectsPage = false
 //-------Start onMount-------//
@@ -71,6 +71,7 @@ onMount(async () => {
     cursorAnnimation();
     imageResizer();
     updateOptionsDiv();
+    // drake();
     y = 0;
     findDate();
 
@@ -243,6 +244,10 @@ function gpaAnimation() {
     }
 }
 
+// function drake() {
+//     audio.play();
+//     setTimeout(drake, 100)
+// }
 
 function updateOptionsDiv() {
     if (y <= 1400) {
@@ -588,6 +593,9 @@ button{
     font-family: 'Palanquin Dark', sans-serif;
 }
 
+/* audio{
+    opacity: 0;
+} */
 
 .rightOptionsDiv { direction: rtl; }
 .rightOptionsDiv > * { direction: ltr; }
@@ -1137,6 +1145,9 @@ button{
         <p class = 'backText'>Back</p>
     </button>
     {/if}
+    <!-- <audio controls autoplay bind:this={audio}>
+        <source src='/music.mp3' type='audio/mp3'>
+    </audio> -->
     {#if y > 50 && y < 1700}
         <div class= 'aboutBackground' in:fade><img bind:this="{laptopSize}" src = {laptopImg} alt = 'laptop' class = 'laptopImg' style= 'transform: {1 + (y - 50) / 1000}'></div>
     {:else if y < 50}
