@@ -29,7 +29,7 @@ let toolsHover = '';
 let selectedProject = 'none';
 
 //Const Text Declaration
-const fullText = ["Hey Everyone!", "My name is Raman Khatri Chhetri"];
+const fullText = ["Hey Everyone!", "My name is Raman Khatri"];
 const lessThan = '<';
 const greaterThan = '>';
 
@@ -112,7 +112,7 @@ function writer() {
     if (textIndex < fullText[fullTextIndex].length + 1) {
         text += fullText[fullTextIndex].charAt(textIndex);
         textIndex++;
-        setTimeout(writer, 100);
+        setTimeout(writer, 50);
     } else {
         if (fullTextIndex < fullText.length - 1) {
             cursorIndex = 0;
@@ -142,7 +142,7 @@ function deleter() {
     if (textIndex !== 0) {
         text = text.substr(0, textIndex - 1);
         textIndex--;
-        setTimeout(deleter, 50);
+        setTimeout(deleter, 25);
     } else {
         if (fullTextIndex < fullText.length - 1) {
             fullTextIndex++;
