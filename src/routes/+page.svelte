@@ -355,7 +355,9 @@ body{
     margin: 0;
     background-size: 110%;
     background-position: 4% 4%;
+    overflow-x: hidden !important;
 }
+
 
 #cursor {
     transition: color 0.3s;
