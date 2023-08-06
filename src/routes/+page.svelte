@@ -1193,7 +1193,7 @@ button{
                     </p>
                 </div>
                 <div class='aboutTextDiv'>
-                    <p>I am a full-stack Software Engineer with experince in web development, mobile development, data science and ML. I am always looking for new oppurtunies to improve my skills through projects and internships. You can navigate my portfolio by scrolling up and down!</p>
+                    <p>I am a full-stack Software Engineer with experience in web development, mobile development, data science, and machine learning. I am continually seeking new opportunities to enhance my skills through projects and internships. You can navigate my portfolio by scrolling up and down!</p>
                 </div>
             </div>
         </div>
