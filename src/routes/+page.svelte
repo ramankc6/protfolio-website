@@ -1259,7 +1259,7 @@ button{
                             </div>
                             {#if selectedProject == 'none'}
                             <div class = 'discription'>
-                                <h2 class='discriptionTitle'> Hover Over An Image</h2>
+                                <h2 class='discriptionTitle'> Click On An Image</h2>
                                 <p class='discriptionText'></p>
                                 <h3><b></b></h3>
                                 <div class= 'discription_Links'>
