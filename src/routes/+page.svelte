@@ -90,10 +90,10 @@ function findDate() {
 
 //Cursor Function that blinks the cursor and then calls the typer and deleter depending on if the text is apearing or not
 function cursorAnnimation() {
-    if (cursorIndex !== 5) {
+    if (cursorIndex !== 3) {
         cursorColor = cursorIndex % 2 === 0 ? "#aeafad" : "#1e1e1e";
         cursorIndex++;
-        setTimeout(cursorAnnimation, 500);
+        setTimeout(cursorAnnimation, 300);
     } else {
         if (textIndex != 0) {
             setTimeout(deleter, 250);
@@ -117,7 +117,7 @@ function writer() {
         if (fullTextIndex < fullText.length - 1) {
             cursorIndex = 0;
             cursorColor = "#1e1e1e";
-            setTimeout(cursorAnnimation, 500);
+            setTimeout(cursorAnnimation, 200);
         } else {
             cursorColor = "#1e1e1e";
             showScroller = true;
@@ -148,7 +148,7 @@ function deleter() {
             fullTextIndex++;
             cursorIndex = 0;
             cursorColor = "#1e1e1e";
-            setTimeout(cursorAnnimation, 500);
+            setTimeout(cursorAnnimation, 100);
         }
     }
 }
